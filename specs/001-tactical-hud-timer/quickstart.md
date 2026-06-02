@@ -36,6 +36,7 @@ npm run coverage     # coverage report
 ```
 
 Test layout:
+
 - `tests/unit/` — pure domain logic: derivations, MAP, countdown/CPR math (vitest
   fake timers), persistence load/save/clear.
 - `tests/component/` — React Testing Library: tile taps, numpad entry, vitals commit,

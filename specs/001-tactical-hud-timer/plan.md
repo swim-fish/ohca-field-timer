@@ -52,16 +52,16 @@ tens to low-hundreds of timeline events per case. No multi-user, no concurrency.
 
 ## Constitution Check
 
-*GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
+_GATE: Must pass before Phase 0 research. Re-check after Phase 1 design._
 
-| Principle | Gate | Status |
-|-----------|------|--------|
-| I. Code Quality & Consistent Style | TypeScript `strict`, no untyped `any`; Prettier `--check` + auto-format hook enforced in CI and pre-commit | PASS — stack is TS strict; Prettier config + format script + hook are explicit tasks |
-| II. Test-First Development | TDD red-green-refactor; tests written and failing before implementation | PASS — Vitest+RTL chosen; tasks ordered tests-first; derivations/countdowns/persistence/MAP are unit-testable |
-| III. User Experience Consistency | Consistent interaction/terminology; UI changes documented in `docs/ui/` | PASS — recreating one cohesive design; `docs/ui/tactical-hud.md` is a Phase 1 deliverable |
-| IV. Performance & Offline-First | Offline PWA; explicit, measurable performance budgets verified | PASS — vite-plugin-pwa offline shell; budgets declared above and in research.md |
-| V. Documentation Discipline | English docs; ADRs; update ADRs after analyze/implement | PASS — `docs/adr/` seeded in Phase 1; ADR update is a standing task post-implement |
-| VI. Subagent-Driven Workflow | Splittable work delegated; Sonnet for simple, mixed Sonnet+Opus for review | PASS — research delegated to a Sonnet subagent; code review to a mixed panel (planned) |
+| Principle                          | Gate                                                                                                       | Status                                                                                                        |
+| ---------------------------------- | ---------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- |
+| I. Code Quality & Consistent Style | TypeScript `strict`, no untyped `any`; Prettier `--check` + auto-format hook enforced in CI and pre-commit | PASS — stack is TS strict; Prettier config + format script + hook are explicit tasks                          |
+| II. Test-First Development         | TDD red-green-refactor; tests written and failing before implementation                                    | PASS — Vitest+RTL chosen; tasks ordered tests-first; derivations/countdowns/persistence/MAP are unit-testable |
+| III. User Experience Consistency   | Consistent interaction/terminology; UI changes documented in `docs/ui/`                                    | PASS — recreating one cohesive design; `docs/ui/tactical-hud.md` is a Phase 1 deliverable                     |
+| IV. Performance & Offline-First    | Offline PWA; explicit, measurable performance budgets verified                                             | PASS — vite-plugin-pwa offline shell; budgets declared above and in research.md                               |
+| V. Documentation Discipline        | English docs; ADRs; update ADRs after analyze/implement                                                    | PASS — `docs/adr/` seeded in Phase 1; ADR update is a standing task post-implement                            |
+| VI. Subagent-Driven Workflow       | Splittable work delegated; Sonnet for simple, mixed Sonnet+Opus for review                                 | PASS — research delegated to a Sonnet subagent; code review to a mixed panel (planned)                        |
 
 **Initial Constitution Check: PASS** — no violations; Complexity Tracking not required.
 
@@ -161,5 +161,5 @@ between `ohca-core.jsx` (logic/atoms) and `variant-tactical.jsx` (layout).
 > No constitution violations — this section is intentionally empty.
 
 | Violation | Why Needed | Simpler Alternative Rejected Because |
-|-----------|------------|-------------------------------------|
-| — | — | — |
+| --------- | ---------- | ------------------------------------ |
+| —         | —          | —                                    |

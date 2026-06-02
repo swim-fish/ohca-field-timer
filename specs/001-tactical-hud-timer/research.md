@@ -68,8 +68,8 @@ implementation gotchas.
         start_url: '/ohca-field-timer/',
         scope: '/ohca-field-timer/',
         // icon src paths must also be relative or use the base prefix
-      }
-    })
+      },
+    });
     ```
   - Icon `src` paths in the manifest must be absolute from the repo root (e.g.
     `/ohca-field-timer/icons/icon-192.png`), not bare filenames, or the browser will
@@ -116,6 +116,7 @@ implementation gotchas.
     — but this is out of scope for the current feature.
 
 - **Environment variable pattern for base path**:
+
   ```yaml
   # .github/workflows/deploy.yml
   - name: Build
@@ -123,10 +124,12 @@ implementation gotchas.
     env:
       VITE_BASE_PATH: /ohca-field-timer/
   ```
+
   ```ts
   // vite.config.ts
   base: process.env.VITE_BASE_PATH ?? '/',
   ```
+
   This keeps local dev working at `http://localhost:5173/` (base `/`) while the CI build
   uses the correct subpath.
 
@@ -164,13 +167,16 @@ implementation gotchas.
   `events` array is stored as-is. No custom serializer is needed.
 
 - **Autosave pattern**:
+
   ```ts
   // Inside useOHCA (TypeScript port):
   useEffect(() => {
     localStorage.setItem('ohca_case', JSON.stringify({ caseStart, rosc, arrived, cpr, events }));
   }, [caseStart, rosc, arrived, cpr, events]);
   ```
+
   Restore on initialization:
+
   ```ts
   const saved = localStorage.getItem('ohca_case');
   const initial = saved ? JSON.parse(saved) : defaultCase();
@@ -209,7 +215,7 @@ implementation gotchas.
     Deriving elapsed time from `Date.now() - caseStart` means: even if the heartbeat skips
     30 ticks while the screen is locked, the display shows the correct elapsed time the
     moment the screen unlocks. This is the pattern used in the prototype (`elapsedSec =
-    Math.floor((now.getTime() - caseStart) / 1000)`).
+Math.floor((now.getTime() - caseStart) / 1000)`).
   - **FR-001 adjustable start time**: Because elapsed time is always re-derived from
     `caseStart`, adjusting `caseStart` (e.g., backfilling the actual arrest time)
     immediately recalculates `elapsedSec` and all event elapsed-offsets with no additional
@@ -218,6 +224,7 @@ implementation gotchas.
     underlying correctness depends on wall-clock subtraction, not tick accuracy.
 
 - **Heartbeat implementation**:
+
   ```ts
   const [now, setNow] = useState<Date>(() => new Date());
   useEffect(() => {
@@ -225,13 +232,15 @@ implementation gotchas.
     return () => clearInterval(id);
   }, []);
   ```
+
   One interval for the entire app (not per-countdown), minimizing timer proliferation.
 
 - **Derived countdown pattern** (from prototype, ported to TypeScript):
+
   ```ts
-  const epiRemain: number | null =
-    epiLast == null ? null : EPI_INTERVAL - (nowMs - epiLast) / 1000;
+  const epiRemain: number | null = epiLast == null ? null : EPI_INTERVAL - (nowMs - epiLast) / 1000;
   ```
+
   The countdown goes negative when overdue (positive displayed as `+mm:ss` per `fmtClock`),
   which naturally handles the "due / overdue" state without additional flags.
 
@@ -279,17 +288,49 @@ implementation gotchas.
     with a `kind` field, then derive everything via typed array operations.
 
 - **TypeScript type design**:
-  ```ts
-  type EventKind = 'epi' | 'amio' | 'defib' | 'iv' | 'rhythm' | 'airway' | 'vitals'
-                | 'rosc' | 'arrival' | 'note';
 
-  interface OHCAEventBase { id: string; at: number; kind: EventKind; label: string; }
-  interface DefibEvent extends OHCAEventBase { kind: 'defib'; joules: number; }
-  interface VitalsEvent extends OHCAEventBase { kind: 'vitals'; vitals: VitalsReading; detail: string; }
+  ```ts
+  type EventKind =
+    | 'epi'
+    | 'amio'
+    | 'defib'
+    | 'iv'
+    | 'rhythm'
+    | 'airway'
+    | 'vitals'
+    | 'rosc'
+    | 'arrival'
+    | 'note';
+
+  interface OHCAEventBase {
+    id: string;
+    at: number;
+    kind: EventKind;
+    label: string;
+  }
+  interface DefibEvent extends OHCAEventBase {
+    kind: 'defib';
+    joules: number;
+  }
+  interface VitalsEvent extends OHCAEventBase {
+    kind: 'vitals';
+    vitals: VitalsReading;
+    detail: string;
+  }
   // ... etc.
-  type OHCAEvent = EpiEvent | AmioEvent | DefibEvent | IVEvent | RhythmEvent
-                | AirwayEvent | VitalsEvent | ROSCEvent | ArrivalEvent | NoteEvent;
+  type OHCAEvent =
+    | EpiEvent
+    | AmioEvent
+    | DefibEvent
+    | IVEvent
+    | RhythmEvent
+    | AirwayEvent
+    | VitalsEvent
+    | ROSCEvent
+    | ArrivalEvent
+    | NoteEvent;
   ```
+
   Exhaustive `switch` on `kind` in derived logic provides compile-time guarantees.
 
 - **`useMemo` for derivations**: Derivations that scan the full events array (initial
@@ -338,6 +379,7 @@ implementation gotchas.
      `epiRemain` equals `EPI_INTERVAL - elapsed`.
 
 - **Fake timer pattern** (Vitest):
+
   ```ts
   import { vi, describe, it, expect, beforeEach, afterEach } from 'vitest';
   import { renderHook, act } from '@testing-library/react';
@@ -352,6 +394,7 @@ implementation gotchas.
     expect(result.current.epiRemain).toBeCloseTo(120, 0); // 120 s remaining of 180
   });
   ```
+
   `vi.advanceTimersByTime` triggers the `setInterval` heartbeat the correct number of
   times, driving `setNow(new Date())` which re-derives all elapsed values.
 
@@ -385,15 +428,24 @@ implementation gotchas.
   requirement — every style property is a typed string/number.
 
 - **Theme type**:
+
   ```ts
   interface Theme {
     name: 'dark' | 'light';
-    bg: string; bgGrad: string;
-    surface: string; surface2: string; raised: string;
-    line: string; lineStrong: string;
-    text: string; textDim: string; textFaint: string;
-    field: string; fieldLine: string;
-    accent: string; shadow: string;
+    bg: string;
+    bgGrad: string;
+    surface: string;
+    surface2: string;
+    raised: string;
+    line: string;
+    lineStrong: string;
+    text: string;
+    textDim: string;
+    textFaint: string;
+    field: string;
+    fieldLine: string;
+    accent: string;
+    shadow: string;
   }
   ```
 
@@ -405,12 +457,17 @@ implementation gotchas.
   prototype and is the lower-risk port.
 
 - **Font setup**:
+
   ```html
   <!-- index.html -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@600;700;800&family=JetBrains+Mono:wght@700;800&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@600;700;800&family=JetBrains+Mono:wght@700;800&display=swap"
+    rel="stylesheet"
+  />
   ```
+
   ```css
   /* index.css — global CSS custom properties used by components */
   :root {
@@ -418,6 +475,7 @@ implementation gotchas.
     --ohca-mono: 'JetBrains Mono', 'Noto Sans TC', monospace;
   }
   ```
+
   The `--ohca-mono` fallback to Noto Sans TC ensures CJK characters in mono contexts
   (e.g., event labels in the timeline `detail` field) render correctly if JetBrains Mono
   lacks the glyph.
@@ -453,15 +511,15 @@ implementation gotchas.
 - **Decision**: Adopt the following concrete, measurable performance budgets derived from
   SC-008 and Constitution Principle IV:
 
-  | Metric | Budget | Verification method |
-  |---|---|---|
-  | Initial JS bundle (gzipped) | ≤ 150 KB | `vite build` + `rollup-plugin-visualizer` |
-  | Time-to-Interactive (TTI) on mid-range Android (4× CPU throttle) | ≤ 2 000 ms | Lighthouse CI in GitHub Actions |
-  | First Contentful Paint (FCP) | ≤ 1 500 ms | Lighthouse CI |
-  | Timer tick display lag (1 s heartbeat drift) | ≤ 100 ms visible | Manual + Vitest fake-timer advance tests |
-  | Interaction-to-paint latency (tap → tile update) | ≤ 100 ms | Chrome DevTools Performance panel |
-  | localStorage write (autosave) | ≤ 5 ms | Vitest benchmark (performance.now() before/after) |
-  | Offline launch (service worker cache hit) | ≤ 1 500 ms | Lighthouse offline audit |
+  | Metric                                                           | Budget           | Verification method                               |
+  | ---------------------------------------------------------------- | ---------------- | ------------------------------------------------- |
+  | Initial JS bundle (gzipped)                                      | ≤ 150 KB         | `vite build` + `rollup-plugin-visualizer`         |
+  | Time-to-Interactive (TTI) on mid-range Android (4× CPU throttle) | ≤ 2 000 ms       | Lighthouse CI in GitHub Actions                   |
+  | First Contentful Paint (FCP)                                     | ≤ 1 500 ms       | Lighthouse CI                                     |
+  | Timer tick display lag (1 s heartbeat drift)                     | ≤ 100 ms visible | Manual + Vitest fake-timer advance tests          |
+  | Interaction-to-paint latency (tap → tile update)                 | ≤ 100 ms         | Chrome DevTools Performance panel                 |
+  | localStorage write (autosave)                                    | ≤ 5 ms           | Vitest benchmark (performance.now() before/after) |
+  | Offline launch (service worker cache hit)                        | ≤ 1 500 ms       | Lighthouse offline audit                          |
 
 - **Rationale**:
   - **SC-001**: "Running case clock visible in under 2 seconds from launch" → TTI ≤ 2 000 ms.
@@ -483,7 +541,7 @@ implementation gotchas.
     browser scheduling may defer it by 5–20 ms in the foreground. This is acceptable —
     the display updates once per second and the human eye cannot distinguish a 20 ms
     delay in a one-second tick.
-  - The drift budget of ≤ 100 ms applies to the *displayed* value's accuracy, not the
+  - The drift budget of ≤ 100 ms applies to the _displayed_ value's accuracy, not the
     interval firing time. Because all values are derived from `Date.now()` at tick time,
     not accumulated ticks, the displayed value after `N` ticks is `Date.now() - caseStart`,
     which is always correct to within the OS scheduling jitter of one tick (~20 ms on

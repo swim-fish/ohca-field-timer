@@ -1,5 +1,5 @@
 ---
-description: "Task list for Tactical HUD OHCA Field Timer implementation"
+description: 'Task list for Tactical HUD OHCA Field Timer implementation'
 ---
 
 # Tasks: Tactical HUD OHCA Field Timer

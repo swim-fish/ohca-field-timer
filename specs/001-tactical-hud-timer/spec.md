@@ -21,7 +21,7 @@
 - Q: How long is an in-progress case retained on the device? → A: Indefinitely on
   the device until a new case is started or the record is manually cleared.
 
-## User Scenarios & Testing *(mandatory)*
+## User Scenarios & Testing _(mandatory)_
 
 ### User Story 1 - Track resuscitation elapsed time and CPR cycles (Priority: P1)
 
@@ -45,15 +45,15 @@ start the CPR cycle, and confirm it counts down from 2:00, warns within the fina
 1. **Given** a new case, **When** the app is opened, **Then** a master elapsed
    clock counts upward in minutes:seconds from the moment of opening and the
    current time-of-day is shown.
-5. **Given** a running case, **When** the rescuer adjusts the case start time,
+2. **Given** a running case, **When** the rescuer adjusts the case start time,
    **Then** the elapsed clock and all event elapsed-offsets recompute against the
    new start time.
-2. **Given** an active case, **When** the rescuer starts the CPR cycle, **Then** a
+3. **Given** an active case, **When** the rescuer starts the CPR cycle, **Then** a
    2-minute countdown begins, shows the current cycle number, and a progress bar
    depletes over the cycle.
-3. **Given** an active CPR cycle, **When** 15 seconds or less remain, **Then** the
+4. **Given** an active CPR cycle, **When** 15 seconds or less remain, **Then** the
    app shows a distinct visual warning prompting "prepare to switch / rhythm check".
-4. **Given** a running CPR cycle, **When** the countdown reaches zero, **Then** the
+5. **Given** a running CPR cycle, **When** the countdown reaches zero, **Then** the
    cycle restarts automatically and the cycle counter increments.
 
 ---
@@ -222,7 +222,7 @@ the case state and timeline are restored.
   and counts remain accurate.
 - Long-press started but released early → no delete is triggered.
 
-## Requirements *(mandatory)*
+## Requirements _(mandatory)_
 
 ### Functional Requirements
 
@@ -286,7 +286,7 @@ the case state and timeline are restored.
 - **FR-021**: All user-facing interface text MUST be presented in Traditional
   Chinese (zh-Hant), consistent with the reference design.
 
-### Key Entities *(include if feature involves data)*
+### Key Entities _(include if feature involves data)_
 
 - **Case**: A single resuscitation episode — its start time, ROSC time (if any),
   hospital-arrival time (if any), CPR cycle state, and its collection of events.
@@ -298,7 +298,7 @@ the case state and timeline are restored.
   blood pressure, derived mean arterial pressure, heart rate, SpO₂, EtCO₂,
   temperature, and an optional ECG note.
 
-## Success Criteria *(mandatory)*
+## Success Criteria _(mandatory)_
 
 ### Measurable Outcomes
 

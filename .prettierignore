@@ -6,3 +6,5 @@ dev-dist/
 package-lock.json
 specs/001-tactical-hud-timer/design-reference/
 .specify/
+.claude/
+CLAUDE.md

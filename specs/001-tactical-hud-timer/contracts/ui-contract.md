@@ -27,31 +27,31 @@ tokens live in `docs/ui/tactical-hud.md`.
 
 ## Behavioral contract (testable interactions)
 
-| Interaction | Expected result | Req |
-|-------------|-----------------|-----|
-| Open app | Elapsed clock visible and advancing within 2s, no setup | SC-001, FR-001 |
-| Tap clock → set new start time | Elapsed + all row offsets recompute | FR-001 |
-| Tap Epinephrine tile | count→+1; tile shows `mm:ss` countdown from 3:00; sub `已給 N 劑` | FR-003 |
-| Epi countdown reaches 0 | tile shows `可給藥` and pulses until next dose | FR-003 |
-| Tap Amiodarone tile | count→+1; countdown from 4:00 | FR-004 |
-| Tap Defib tile → choose 200J | shock count +1; defib event with energy logged | FR-005 |
-| Tap IV/IO tile | shows `已建立`; `iv` event logged | FR-006 |
-| Tap Rhythm → pick VF | rhythm recorded; shockable badge shown in picker | FR-007 |
-| Tap Airway → ETT → size 7.5 | airway recorded with size; tile shows device + 管徑 | FR-008 |
-| Tap vitals cell → keypad → 確定 | value captured into draft; cell shows value | FR-009 |
-| Enter SBP+DBP | MAP pill shows `round(dia+(sys-dia)/3)` | FR-009 |
-| Tap commit vitals | timestamped vitals row added; draft cleared | FR-010 |
-| Start CPR | countdown from 2:00, `第 1 輪`, progress depletes | FR-002 |
-| CPR ≤ 15s | warning text + orange styling shown | FR-002 |
-| CPR reaches 0 | rolls to `第 2 輪`, countdown restarts | FR-002 |
-| Tap ROSC | status → green ROSC, time recorded, clock keeps running | FR-014 |
-| Tap 到達醫院 | arrival recorded with time | FR-014 |
-| Long-press a timeline row (~550ms) | `刪除` button arms; tap deletes; stats update | FR-013/016 |
-| Release long-press early | no delete armed | Edge case |
-| Tap 新案件 → confirm | timers/milestones/events reset | FR-015 |
-| Toggle theme | switches dark/light tokens across screen | FR-017 |
-| Reload mid-case | case + events restored from storage | FR-020 |
-| Network disabled after first load | app launches and all actions work | FR-019 |
+| Interaction                        | Expected result                                                   | Req            |
+| ---------------------------------- | ----------------------------------------------------------------- | -------------- |
+| Open app                           | Elapsed clock visible and advancing within 2s, no setup           | SC-001, FR-001 |
+| Tap clock → set new start time     | Elapsed + all row offsets recompute                               | FR-001         |
+| Tap Epinephrine tile               | count→+1; tile shows `mm:ss` countdown from 3:00; sub `已給 N 劑` | FR-003         |
+| Epi countdown reaches 0            | tile shows `可給藥` and pulses until next dose                    | FR-003         |
+| Tap Amiodarone tile                | count→+1; countdown from 4:00                                     | FR-004         |
+| Tap Defib tile → choose 200J       | shock count +1; defib event with energy logged                    | FR-005         |
+| Tap IV/IO tile                     | shows `已建立`; `iv` event logged                                 | FR-006         |
+| Tap Rhythm → pick VF               | rhythm recorded; shockable badge shown in picker                  | FR-007         |
+| Tap Airway → ETT → size 7.5        | airway recorded with size; tile shows device + 管徑               | FR-008         |
+| Tap vitals cell → keypad → 確定    | value captured into draft; cell shows value                       | FR-009         |
+| Enter SBP+DBP                      | MAP pill shows `round(dia+(sys-dia)/3)`                           | FR-009         |
+| Tap commit vitals                  | timestamped vitals row added; draft cleared                       | FR-010         |
+| Start CPR                          | countdown from 2:00, `第 1 輪`, progress depletes                 | FR-002         |
+| CPR ≤ 15s                          | warning text + orange styling shown                               | FR-002         |
+| CPR reaches 0                      | rolls to `第 2 輪`, countdown restarts                            | FR-002         |
+| Tap ROSC                           | status → green ROSC, time recorded, clock keeps running           | FR-014         |
+| Tap 到達醫院                       | arrival recorded with time                                        | FR-014         |
+| Long-press a timeline row (~550ms) | `刪除` button arms; tap deletes; stats update                     | FR-013/016     |
+| Release long-press early           | no delete armed                                                   | Edge case      |
+| Tap 新案件 → confirm               | timers/milestones/events reset                                    | FR-015         |
+| Toggle theme                       | switches dark/light tokens across screen                          | FR-017         |
+| Reload mid-case                    | case + events restored from storage                               | FR-020         |
+| Network disabled after first load  | app launches and all actions work                                 | FR-019         |
 
 ## Accessibility / field-use (Principle III)
 
