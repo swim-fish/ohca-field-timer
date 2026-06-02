@@ -1,7 +1,10 @@
 # Backlog: Simplified AED rhythm-analysis mode
 
-**Status**: Requirements captured (not yet scheduled). Discussed 2026-06-02.
-**Likely path**: a future `/speckit-specify` increment (feature 002) — decision deferred.
+**Status**: ✅ REALIZED by feature 002 (`specs/002-touch-ux-aed-mode/`). Implemented as
+the 進階 ACLS ⇄ 簡易 AED toggle in the rhythm sheet; see ADR
+`docs/adr/0005-aed-coarse-rhythm-mode.md`. Original requirements captured 2026-06-02 and
+retained below for history.
+**Likely path**: ~~a future `/speckit-specify` increment (feature 002)~~ — done in feature 002.
 
 ## Goal
 

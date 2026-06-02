@@ -56,3 +56,7 @@ export interface EventMeta {
   color: string;
   glyph: string;
 }
+
+// Rhythm-analysis input mode (feature 002). 進階 ACLS = full 5-rhythm picker;
+// 簡易 AED = coarse 可電擊/不可電擊 decision. Persisted separately from the case.
+export type RhythmMode = '進階 ACLS' | '簡易 AED';

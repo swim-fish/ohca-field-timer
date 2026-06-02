@@ -1,4 +1,5 @@
 import type { Theme } from '../theme/tokens';
+import { TOUCH_MIN } from '../theme/touch';
 
 interface ThemeToggleProps {
   mode: 'dark' | 'light';
@@ -14,8 +15,11 @@ export function ThemeToggle({ mode, onToggle, t }: ThemeToggleProps) {
       style={{
         display: 'flex',
         alignItems: 'center',
+        justifyContent: 'center',
         gap: 6,
-        padding: '6px 10px',
+        minHeight: TOUCH_MIN,
+        minWidth: TOUCH_MIN,
+        padding: '6px 14px',
         borderRadius: 999,
         border: `1px solid ${t.line}`,
         background: t.surface2,

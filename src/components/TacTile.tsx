@@ -1,4 +1,5 @@
 import type { Theme } from '../theme/tokens';
+import { useTapGuard } from '../hooks/useTapGuard';
 
 interface TacTileProps {
   t: Theme;
@@ -12,10 +13,12 @@ interface TacTileProps {
 }
 
 // Drug / action tile with semantic accent, big glanceable value and due-pulse cue.
+// Taps are bounce-guarded so a single gloved contact is not double-counted (FR-008).
 export function TacTile({ t, accent, kicker, big, sub, onClick, due, active }: TacTileProps) {
+  const guard = useTapGuard();
   return (
     <button
-      onClick={onClick}
+      onClick={guard(onClick)}
       style={{
         position: 'relative',
         textAlign: 'left',

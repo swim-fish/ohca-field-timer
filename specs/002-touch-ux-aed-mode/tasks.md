@@ -27,7 +27,7 @@ Single-project web app at repository root: `src/`, `tests/`, `docs/` (per plan.m
 
 **Purpose**: Confirm the existing toolchain; no new runtime dependencies (research.md R1–R5).
 
-- [ ] T001 [P] Confirm dev tooling is ready (Vitest, @testing-library/react, @testing-library/user-event, Prettier) and that NO new runtime dependency is introduced, per research.md; no change to package.json runtime deps
+- [x] T001 [P] Confirm dev tooling is ready (Vitest, @testing-library/react, @testing-library/user-event, Prettier) and that NO new runtime dependency is introduced, per research.md; no change to package.json runtime deps
 
 ---
 
@@ -37,8 +37,8 @@ Single-project web app at repository root: `src/`, `tests/`, `docs/` (per plan.m
 
 **⚠️ CRITICAL**: T002 blocks US2 (and the touch floor of US1/US4 controls); T003 blocks the US1 (pointer) and US3 (matchMedia) tests.
 
-- [ ] T002 [P] Add touch-target tokens `--ohca-touch-min: 56px` and `--ohca-touch-gap: 8px` (plus an optional `.ohca-touchable` helper) to src/styles/global.css
-- [ ] T003 [P] Extend tests/setup.ts with a `window.matchMedia` mock and no-op `setPointerCapture`/`releasePointerCapture` shims for jsdom
+- [x] T002 [P] Add touch-target tokens `--ohca-touch-min: 56px` and `--ohca-touch-gap: 8px` (plus an optional `.ohca-touchable` helper) to src/styles/global.css
+- [x] T003 [P] Extend tests/setup.ts with a `window.matchMedia` mock and no-op `setPointerCapture`/`releasePointerCapture` shims for jsdom
 
 **Checkpoint**: Tokens and test harness ready — user stories can begin.
 
@@ -52,14 +52,14 @@ Single-project web app at repository root: `src/`, `tests/`, `docs/` (per plan.m
 
 ### Tests for User Story 1 ⚠️ (write first, must FAIL)
 
-- [ ] T004 [P] [US1] Write failing component test covering SW-1..SW-7 (reveal past threshold, partial snap-back, tap-delete recomputes summaries, one-open-at-a-time, vertical-scroll direction lock, long-press does nothing) in tests/component/timelineSwipeDelete.test.tsx
+- [x] T004 [P] [US1] Write failing component test covering SW-1..SW-7 (reveal past threshold, partial snap-back, tap-delete recomputes summaries, one-open-at-a-time, vertical-scroll direction lock, long-press does nothing) in tests/component/timelineSwipeDelete.test.tsx
 
 ### Implementation for User Story 1
 
-- [ ] T005 [US1] Rewrite src/components/TimelineRow.tsx: pointer-event swipe-to-reveal delete with first-move direction lock, threshold latch/snap-back animation, and revealed `刪除` button; remove the 550 ms long-press logic entirely (FR-001, FR-002, FR-004)
-- [ ] T006 [US1] Add one-open-at-a-time coordination in src/components/Timeline.tsx (openId/onOpen props or a small context) so opening one row closes any other (FR-003)
-- [ ] T007 [US1] Ensure the revealed `刪除` button meets the touch floor using the T002 tokens in src/components/TimelineRow.tsx (FR-006)
-- [ ] T008 [US1] Update the timeline hint text in src/App.tsx from `長按項目可刪除` to `滑動項目可刪除`
+- [x] T005 [US1] Rewrite src/components/TimelineRow.tsx: pointer-event swipe-to-reveal delete with first-move direction lock, threshold latch/snap-back animation, and revealed `刪除` button; remove the 550 ms long-press logic entirely (FR-001, FR-002, FR-004)
+- [x] T006 [US1] Add one-open-at-a-time coordination in src/components/Timeline.tsx (openId/onOpen props or a small context) so opening one row closes any other (FR-003)
+- [x] T007 [US1] Ensure the revealed `刪除` button meets the touch floor using the T002 tokens in src/components/TimelineRow.tsx (FR-006)
+- [x] T008 [US1] Update the timeline hint text in src/App.tsx from `長按項目可刪除` to `滑動項目可刪除`
 
 **Checkpoint**: US1 fully functional and independently testable (MVP).
 
@@ -73,17 +73,17 @@ Single-project web app at repository root: `src/`, `tests/`, `docs/` (per plan.m
 
 ### Tests for User Story 2 ⚠️ (write first, must FAIL)
 
-- [ ] T009 [P] [US2] Write failing component test covering TT-1..TT-5 (every primary control ≥56×56, ≥8 px gap, holds in all layouts) in tests/component/touchTargets.test.tsx
+- [x] T009 [P] [US2] Write failing component test covering TT-1..TT-5 (every primary control ≥56×56, ≥8 px gap, holds in all layouts) in tests/component/touchTargets.test.tsx
 
 ### Implementation for User Story 2
 
-- [ ] T010 [US2] Add a glove size (e.g. `size="lg"`, ≥56 px) to src/components/Seg.tsx (reused by the US4 AED toggle)
-- [ ] T011 [P] [US2] Raise the rhythm buttons from 54 to ≥56 px and ensure ≥8 px gaps in src/components/RhythmPicker.tsx (coordinate with T028 — same file)
-- [ ] T012 [P] [US2] Audit/raise keypad keys to ≥56×56 with ≥8 px spacing in src/components/NumPad.tsx
-- [ ] T013 [P] [US2] Audit/raise the status buttons to the touch floor in src/components/StatusBtn.tsx
-- [ ] T014 [P] [US2] Audit/raise the theme toggle to the touch floor in src/components/ThemeToggle.tsx
-- [ ] T015 [P] [US2] Audit DefibSheet and Sheet controls against the touch floor in src/components/DefibSheet.tsx and src/components/Sheet.tsx
-- [ ] T016 [US2] Implement a tap bounce-guard utility (e.g. src/hooks/useTapGuard.ts) and apply it to primary action handlers via src/components/TacTile.tsx so a single gloved contact is not double-counted while genuine rapid taps still register (FR-008)
+- [x] T010 [US2] Add a glove size (e.g. `size="lg"`, ≥56 px) to src/components/Seg.tsx (reused by the US4 AED toggle)
+- [x] T011 [P] [US2] Raise the rhythm buttons from 54 to ≥56 px and ensure ≥8 px gaps in src/components/RhythmPicker.tsx (coordinate with T028 — same file)
+- [x] T012 [P] [US2] Audit/raise keypad keys to ≥56×56 with ≥8 px spacing in src/components/NumPad.tsx
+- [x] T013 [P] [US2] Audit/raise the status buttons to the touch floor in src/components/StatusBtn.tsx
+- [x] T014 [P] [US2] Audit/raise the theme toggle to the touch floor in src/components/ThemeToggle.tsx
+- [x] T015 [P] [US2] Audit DefibSheet and Sheet controls against the touch floor in src/components/DefibSheet.tsx and src/components/Sheet.tsx
+- [x] T016 [US2] Implement a tap bounce-guard utility (e.g. src/hooks/useTapGuard.ts) and apply it to primary action handlers via src/components/TacTile.tsx so a single gloved contact is not double-counted while genuine rapid taps still register (FR-008)
 
 **Checkpoint**: US1 AND US2 both work independently.
 
@@ -97,13 +97,13 @@ Single-project web app at repository root: `src/`, `tests/`, `docs/` (per plan.m
 
 ### Tests for User Story 3 ⚠️ (write first, must FAIL)
 
-- [ ] T017 [P] [US3] Write failing component test covering RL-1..RL-4 (portrait single-column vs wide two-zone via mocked matchMedia; case-derived values unchanged across a wide toggle) in tests/component/responsiveLayout.test.tsx
+- [x] T017 [P] [US3] Write failing component test covering RL-1..RL-4 (portrait single-column vs wide two-zone via mocked matchMedia; case-derived values unchanged across a wide toggle) in tests/component/responsiveLayout.test.tsx
 
 ### Implementation for User Story 3
 
-- [ ] T018 [P] [US3] Create src/hooks/useViewport.ts returning a `wide` flag from `matchMedia('(min-width: 900px) and (orientation: landscape)')` or `(min-width: 1000px)` (responsive-contract.md)
-- [ ] T019 [US3] Refactor src/App.tsx to render a two-zone CSS grid when `wide` (primary zone: CommandBar/CPR/status/tiles/vitals/stats; side zone: persistent Timeline) and the current single column otherwise; re-parent the same components without duplicating logic (FR-009, FR-011)
-- [ ] T020 [US3] Add responsive grid/sizing CSS (clamp/minmax, no large gutters, touch floor preserved, touch-first) in src/styles/global.css (FR-010; coordinate with T002 — same file)
+- [x] T018 [P] [US3] Create src/hooks/useViewport.ts returning a `wide` flag from `matchMedia('(min-width: 900px) and (orientation: landscape)')` or `(min-width: 1000px)` (responsive-contract.md)
+- [x] T019 [US3] Refactor src/App.tsx to render a two-zone CSS grid when `wide` (primary zone: CommandBar/CPR/status/tiles/vitals/stats; side zone: persistent Timeline) and the current single column otherwise; re-parent the same components without duplicating logic (FR-009, FR-011)
+- [x] T020 [US3] Add responsive grid/sizing CSS (clamp/minmax, no large gutters, touch floor preserved, touch-first) in src/styles/global.css (FR-010; coordinate with T002 — same file)
 
 **Checkpoint**: US1, US2, US3 all independently functional.
 
@@ -117,18 +117,18 @@ Single-project web app at repository root: `src/`, `tests/`, `docs/` (per plan.m
 
 ### Tests for User Story 4 ⚠️ (write first, must FAIL)
 
-- [ ] T021 [P] [US4] Write failing unit test for the AED_OUTCOMES table (coarse labels, shockable flags, and that no outcome equals/maps to a specific RHYTHMS key — clinical guardrail) in tests/unit/aedOutcomes.test.ts
-- [ ] T022 [P] [US4] Write failing unit test for prefStore (PR-1..PR-5: default 進階 ACLS, write on change, restore on reload, untouched by newCase, corrupt-value fallback) in tests/unit/prefStore.test.ts
-- [ ] T023 [P] [US4] Write failing component test covering AED-1..AED-8 (toggle shows correct picker, coarse outcome recorded via setRhythm, 已電擊 shortcut logs/declines, remembered mode) in tests/component/rhythmAedMode.test.tsx
+- [x] T021 [P] [US4] Write failing unit test for the AED_OUTCOMES table (coarse labels, shockable flags, and that no outcome equals/maps to a specific RHYTHMS key — clinical guardrail) in tests/unit/aedOutcomes.test.ts
+- [x] T022 [P] [US4] Write failing unit test for prefStore (PR-1..PR-5: default 進階 ACLS, write on change, restore on reload, untouched by newCase, corrupt-value fallback) in tests/unit/prefStore.test.ts
+- [x] T023 [P] [US4] Write failing component test covering AED-1..AED-8 (toggle shows correct picker, coarse outcome recorded via setRhythm, 已電擊 shortcut logs/declines, remembered mode) in tests/component/rhythmAedMode.test.tsx
 
 ### Implementation for User Story 4
 
-- [ ] T024 [P] [US4] Add `RhythmMode = '進階 ACLS' | '簡易 AED'` type to src/domain/types.ts
-- [ ] T025 [P] [US4] Add `AedOutcome` interface and `AED_OUTCOMES` table (`可電擊 AED建議電擊` shockable, `不可電擊 AED不建議電擊` not) to src/domain/constants.ts (data-model.md)
-- [ ] T026 [US4] Create src/persistence/prefStore.ts persisting `ohca.rhythmMode` with read/write/default and corrupt-value fallback, tolerant of unavailable storage (mirror caseStore.ts pattern; FR-015)
-- [ ] T027 [US4] Create src/hooks/useRhythmMode.ts to read and persist the remembered rhythm-analysis mode via prefStore
-- [ ] T028 [US4] Update src/components/RhythmPicker.tsx: add the 進階 ACLS ⇄ 簡易 AED toggle (Seg `lg` from T010), render the two AED outcome buttons in 簡易 AED mode, record outcomes via the existing `onPick`/`setRhythm`, and expose a one-tap 已電擊 shortcut callback after 建議電擊 (FR-012, FR-013, FR-014, FR-016; coordinate with T011 — same file)
-- [ ] T029 [US4] Wire RhythmPicker into src/App.tsx: feed mode from useRhythmMode, persist on toggle, route 建議電擊 → `actions.logDefib(null)` shortcut on accept, and keep `setRhythm` for both modes (FR-014; coordinate with T008/T019 — same file)
+- [x] T024 [P] [US4] Add `RhythmMode = '進階 ACLS' | '簡易 AED'` type to src/domain/types.ts
+- [x] T025 [P] [US4] Add `AedOutcome` interface and `AED_OUTCOMES` table (`可電擊 AED建議電擊` shockable, `不可電擊 AED不建議電擊` not) to src/domain/constants.ts (data-model.md)
+- [x] T026 [US4] Create src/persistence/prefStore.ts persisting `ohca.rhythmMode` with read/write/default and corrupt-value fallback, tolerant of unavailable storage (mirror caseStore.ts pattern; FR-015)
+- [x] T027 [US4] Create src/hooks/useRhythmMode.ts to read and persist the remembered rhythm-analysis mode via prefStore
+- [x] T028 [US4] Update src/components/RhythmPicker.tsx: add the 進階 ACLS ⇄ 簡易 AED toggle (Seg `lg` from T010), render the two AED outcome buttons in 簡易 AED mode, record outcomes via the existing `onPick`/`setRhythm`, and expose a one-tap 已電擊 shortcut callback after 建議電擊 (FR-012, FR-013, FR-014, FR-016; coordinate with T011 — same file)
+- [x] T029 [US4] Wire RhythmPicker into src/App.tsx: feed mode from useRhythmMode, persist on toggle, route 建議電擊 → `actions.logDefib(null)` shortcut on accept, and keep `setRhythm` for both modes (FR-014; coordinate with T008/T019 — same file)
 
 **Checkpoint**: All four user stories independently functional.
 
@@ -138,15 +138,15 @@ Single-project web app at repository root: `src/`, `tests/`, `docs/` (per plan.m
 
 **Purpose**: Documentation, ADRs, and the constitution quality gates.
 
-- [ ] T030 [P] Update docs/ui/tactical-hud.md to document swipe-delete, the touch floor, the adaptive layout, and the AED toggle (Principle III)
-- [ ] T031 [P] Add ADR docs/adr/0004-swipe-delete-over-long-press.md (Principle V)
-- [ ] T032 [P] Add ADR docs/adr/0005-aed-coarse-rhythm-mode.md, including the clinical guardrail (Principle V)
-- [ ] T033 [P] Mark docs/backlog/aed-simplified-rhythm.md as realized by feature 002 (link to this spec)
-- [ ] T034 Run `npx prettier --check .` and fix any formatting (Principle I)
-- [ ] T035 Run `npm run test:run`; confirm all suites pass and the previously-failing new tests are now green (Principle II)
-- [ ] T036 Build and preview (`npm run build` + `npm run preview`); verify the PWA still launches offline and the feature 001 performance budgets still hold (Principle IV)
+- [x] T030 [P] Update docs/ui/tactical-hud.md to document swipe-delete, the touch floor, the adaptive layout, and the AED toggle (Principle III)
+- [x] T031 [P] Add ADR docs/adr/0004-swipe-delete-over-long-press.md (Principle V)
+- [x] T032 [P] Add ADR docs/adr/0005-aed-coarse-rhythm-mode.md, including the clinical guardrail (Principle V)
+- [x] T033 [P] Mark docs/backlog/aed-simplified-rhythm.md as realized by feature 002 (link to this spec)
+- [x] T034 Run `npx prettier --check .` and fix any formatting (Principle I)
+- [x] T035 Run `npm run test:run`; confirm all suites pass and the previously-failing new tests are now green (Principle II)
+- [x] T036 Build and preview (`npm run build` + `npm run preview`); verify the PWA still launches offline and the feature 001 performance budgets still hold (Principle IV)
 - [ ] T037 Run the quickstart.md manual verification of all four changes
-- [ ] T038 Mixed Sonnet + Opus subagent code review for the non-trivial changes (Principle VI)
+- [x] T038 Mixed Sonnet + Opus subagent code review for the non-trivial changes (Principle VI) — outcomes recorded in docs/adr/0006-review-outcomes-002.md; fixes applied with regression tests
 
 ---
 
@@ -205,7 +205,7 @@ Task: "Add AED_OUTCOMES in src/domain/constants.ts"
 ### MVP First (User Story 1 only)
 
 1. Phase 1: Setup → 2. Phase 2: Foundational → 3. Phase 3: US1 (swipe-delete).
-4. **STOP and VALIDATE**: test US1 independently. 5. Deploy/demo if ready.
+2. **STOP and VALIDATE**: test US1 independently. 5. Deploy/demo if ready.
 
 ### Incremental Delivery
 
@@ -214,7 +214,7 @@ Task: "Add AED_OUTCOMES in src/domain/constants.ts"
 3. US2 (touch floor) → test → demo.
 4. US3 (responsive) → test → demo.
 5. US4 (AED mode) → test → demo.
-Each story adds value without breaking the previous ones.
+   Each story adds value without breaking the previous ones.
 
 ### Parallel Team Strategy
 

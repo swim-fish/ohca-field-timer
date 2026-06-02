@@ -1,4 +1,5 @@
 import type { Theme } from '../theme/tokens';
+import { TOUCH_MIN } from '../theme/touch';
 
 interface StatusBtnProps {
   t: Theme;
@@ -14,7 +15,7 @@ export function StatusBtn({ t: _t, color, label, filled, onClick }: StatusBtnPro
       onClick={onClick}
       style={{
         flex: 1,
-        height: 46,
+        minHeight: TOUCH_MIN,
         borderRadius: 13,
         cursor: 'pointer',
         font: 'inherit',

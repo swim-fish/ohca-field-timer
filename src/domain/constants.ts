@@ -1,6 +1,11 @@
-import type { EventKind, EventMeta } from './types';
+import type { EventKind, EventMeta, RhythmMode } from './types';
 
 export const SCHEMA_VERSION = 1;
+
+// Canonical rhythm-analysis modes (feature 002). Single source of truth shared by the
+// RhythmPicker UI and prefStore validation so the two cannot drift (a drift would make
+// prefStore treat a valid mode as corrupt and silently reset the remembered choice).
+export const RHYTHM_MODES: readonly RhythmMode[] = ['進階 ACLS', '簡易 AED'];
 
 export const EPI_INTERVAL = 180; // 3 min target for next dose
 export const AMIO_INTERVAL = 240; // 4 min
@@ -18,6 +23,21 @@ export const RHYTHMS: Rhythm[] = [
   { key: 'PEA', label: 'PEA 無脈電氣活動', shockable: false },
   { key: 'Asystole', label: 'Asystole 心停', shockable: false },
   { key: 'ROSC', label: 'ROSC 自發循環', shockable: false },
+];
+
+export interface AedOutcome {
+  key: 'shock' | 'noshock';
+  label: string;
+  shockable: boolean;
+}
+
+// Simplified AED rhythm mode (feature 002, FR-013). Stores ONLY a coarse
+// shockable / not-shockable decision — never back-mapped to a specific rhythm
+// (clinical guardrail, FR-016). The first label token (可電擊 / 不可電擊) is what
+// the 心律 summary cell shows, matching the existing `.split(' ')[0]` logic.
+export const AED_OUTCOMES: AedOutcome[] = [
+  { key: 'shock', label: '可電擊 AED建議電擊', shockable: true },
+  { key: 'noshock', label: '不可電擊 AED不建議電擊', shockable: false },
 ];
 
 export const AIRWAYS = ['無', '口咽 OPA', '聲門上 i-gel', '氣管內管 ETT'] as const;

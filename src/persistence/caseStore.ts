@@ -2,6 +2,7 @@
 // unavailable storage / quota / private mode — never throws on save (degrade only).
 import type { CaseState } from '../domain/types';
 import { SCHEMA_VERSION } from '../domain/constants';
+import { safeLocalStorage } from './safeStorage';
 
 export interface CaseStore {
   load(): CaseState | null;
@@ -10,18 +11,6 @@ export interface CaseStore {
 }
 
 const KEY = 'ohca.case.v1';
-
-function safeLocalStorage(): Storage | null {
-  try {
-    const ls = globalThis.localStorage;
-    const probe = '__ohca_probe__';
-    ls.setItem(probe, '1');
-    ls.removeItem(probe);
-    return ls;
-  } catch {
-    return null;
-  }
-}
 
 function isValid(value: unknown): value is CaseState {
   if (typeof value !== 'object' || value === null) return false;

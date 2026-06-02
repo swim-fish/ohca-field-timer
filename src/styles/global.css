@@ -1,11 +1,20 @@
 :root {
   --ohca-sans: 'Noto Sans TC', -apple-system, BlinkMacSystemFont, 'Segoe UI', system-ui, sans-serif;
   --ohca-mono: 'JetBrains Mono', 'SFMono-Regular', ui-monospace, Menlo, Consolas, monospace;
+  /* Glove-friendly touch floor — single source of truth (feature 002, FR-006). */
+  --ohca-touch-min: 56px;
+  --ohca-touch-gap: 8px;
 }
 
 * {
   box-sizing: border-box;
   -webkit-tap-highlight-color: transparent;
+}
+
+/* Apply the glove-friendly minimum hit area to any interactive control. */
+.ohca-touchable {
+  min-height: var(--ohca-touch-min);
+  min-width: var(--ohca-touch-min);
 }
 
 html,

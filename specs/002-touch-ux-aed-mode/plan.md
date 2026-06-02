@@ -64,14 +64,14 @@ constant table (`AED_OUTCOMES`); domain timing logic is untouched.
 
 _GATE: Must pass before Phase 0 research. Re-check after Phase 1 design._
 
-| Principle                          | Gate                                                                              | Status                                                                                                                                  |
-| ---------------------------------- | --------------------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------------------------------------------- |
-| I. Code Quality & Consistent Style | TS `strict`, no untyped `any`; Prettier `--check` + format hook                   | PASS — changes are typed React/TS in the existing style; no new `any`; Prettier already wired                                           |
-| II. Test-First Development         | TDD red-green-refactor; tests fail before implementation                          | PASS — swipe-delete, touch-floor, responsive reflow, AED-outcome recording, defib shortcut, and mode persistence are all test-first    |
-| III. User Experience Consistency   | Consistent interaction/terminology; UI changes documented in `docs/ui/`           | PASS — `docs/ui/tactical-hud.md` updated for swipe-delete, touch floor, responsive layout, and AED toggle in the same change set        |
-| IV. Performance & Offline-First    | Offline PWA; explicit, measurable budgets verified                                | PASS — no new deps; offline shell untouched; 001 budgets inherited and swipe/reflow frame budgets declared above                        |
-| V. Documentation Discipline        | English docs; ADRs; update ADRs after analyze/implement                           | PASS — new ADRs seeded (swipe-delete-over-long-press; AED coarse-outcome rhythm mode); ADR review remains a standing post-implement task |
-| VI. Subagent-Driven Workflow       | Splittable work delegated; mixed-model review                                     | PASS — independent stories (swipe / touch-floor / responsive / AED) are parallelizable; code review by a mixed Sonnet+Opus panel        |
+| Principle                          | Gate                                                                    | Status                                                                                                                                   |
+| ---------------------------------- | ----------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| I. Code Quality & Consistent Style | TS `strict`, no untyped `any`; Prettier `--check` + format hook         | PASS — changes are typed React/TS in the existing style; no new `any`; Prettier already wired                                            |
+| II. Test-First Development         | TDD red-green-refactor; tests fail before implementation                | PASS — swipe-delete, touch-floor, responsive reflow, AED-outcome recording, defib shortcut, and mode persistence are all test-first      |
+| III. User Experience Consistency   | Consistent interaction/terminology; UI changes documented in `docs/ui/` | PASS — `docs/ui/tactical-hud.md` updated for swipe-delete, touch floor, responsive layout, and AED toggle in the same change set         |
+| IV. Performance & Offline-First    | Offline PWA; explicit, measurable budgets verified                      | PASS — no new deps; offline shell untouched; 001 budgets inherited and swipe/reflow frame budgets declared above                         |
+| V. Documentation Discipline        | English docs; ADRs; update ADRs after analyze/implement                 | PASS — new ADRs seeded (swipe-delete-over-long-press; AED coarse-outcome rhythm mode); ADR review remains a standing post-implement task |
+| VI. Subagent-Driven Workflow       | Splittable work delegated; mixed-model review                           | PASS — independent stories (swipe / touch-floor / responsive / AED) are parallelizable; code review by a mixed Sonnet+Opus panel         |
 
 **Initial Constitution Check: PASS** — no violations; Complexity Tracking not required.
 

@@ -1,16 +1,18 @@
 import type { Theme } from '../theme/tokens';
+import { TOUCH_MIN } from '../theme/touch';
 
 interface SegProps {
   options: readonly string[];
   value: string;
   onChange: (v: string) => void;
   t: Theme;
-  size?: 'sm' | 'md';
+  size?: 'sm' | 'md' | 'lg';
 }
 
-// Segmented control (e.g. ETT tube size).
+// Segmented control (e.g. ETT tube size, or the glove-sized AED mode toggle).
 export function Seg({ options, value, onChange, t, size }: SegProps) {
-  const h = size === 'sm' ? 32 : 40;
+  // 'lg' meets the glove-friendly touch floor (feature 002, FR-006).
+  const h = size === 'sm' ? 32 : size === 'lg' ? TOUCH_MIN : 40;
   return (
     <div
       style={{

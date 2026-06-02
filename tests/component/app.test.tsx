@@ -116,15 +116,14 @@ describe('App — US4 timeline & delete', () => {
     expect(screen.getByText('IO/IV 通路建立')).toBeInTheDocument();
   });
 
-  it('long-press arms delete and removing updates the summary (FR-013/016)', () => {
+  it('swipe reveals delete and removing updates the summary (FR-013/016)', () => {
     renderApp();
     fireEvent.click(screen.getByText('EPINEPHRINE 強心針'));
-    const row = screen.getByText('Epinephrine 第 1 劑').closest('div')!.parentElement!;
-    fireEvent.pointerDown(row);
-    act(() => {
-      vi.advanceTimersByTime(600);
-    });
-    fireEvent.click(screen.getByText('刪除'));
+    const row = screen.getByText('Epinephrine 第 1 劑').closest('[role="listitem"]') as HTMLElement;
+    fireEvent.pointerDown(row, { clientX: 200, clientY: 100, pointerId: 1 });
+    fireEvent.pointerMove(row, { clientX: 110, clientY: 100, pointerId: 1 });
+    fireEvent.pointerUp(row, { clientX: 110, clientY: 100, pointerId: 1 });
+    fireEvent.click(within(row).getByText('刪除'));
     expect(screen.queryByText('Epinephrine 第 1 劑')).not.toBeInTheDocument();
     expect(screen.getByText('Epi').parentElement).toHaveTextContent('0');
   });
@@ -156,12 +155,11 @@ describe('App — US5 milestones & new case', () => {
     renderApp();
     fireEvent.click(screen.getByText('ROSC'));
     expect(screen.getByText('ROSC · 恢復循環')).toBeInTheDocument();
-    const row = screen.getByText('恢復自發循環 (ROSC)').closest('div')!.parentElement!;
-    fireEvent.pointerDown(row);
-    act(() => {
-      vi.advanceTimersByTime(600);
-    });
-    fireEvent.click(screen.getByText('刪除'));
+    const row = screen.getByText('恢復自發循環 (ROSC)').closest('[role="listitem"]') as HTMLElement;
+    fireEvent.pointerDown(row, { clientX: 200, clientY: 100, pointerId: 1 });
+    fireEvent.pointerMove(row, { clientX: 110, clientY: 100, pointerId: 1 });
+    fireEvent.pointerUp(row, { clientX: 110, clientY: 100, pointerId: 1 });
+    fireEvent.click(within(row).getByText('刪除'));
     // status reverts and ROSC can be declared again
     expect(screen.getByText('OHCA · CPR 進行中')).toBeInTheDocument();
     expect(screen.getByText('ROSC')).toBeInTheDocument();
@@ -263,19 +261,14 @@ describe('App — FR-008 airway with ETT size', () => {
   });
 });
 
-describe('App — long-press released early does not delete (Edge Cases)', () => {
-  it('does not arm delete when released before 550ms', () => {
+describe('App — partial swipe does not delete (Edge Cases)', () => {
+  it('snaps back without arming delete when swiped below threshold', () => {
     renderApp();
     fireEvent.click(screen.getByText('IO / IV 通路'));
-    const row = screen.getByText('IO/IV 通路建立').closest('div')!.parentElement!;
-    fireEvent.pointerDown(row);
-    act(() => {
-      vi.advanceTimersByTime(300);
-    });
-    fireEvent.pointerUp(row);
-    act(() => {
-      vi.advanceTimersByTime(400);
-    });
+    const row = screen.getByText('IO/IV 通路建立').closest('[role="listitem"]') as HTMLElement;
+    fireEvent.pointerDown(row, { clientX: 200, clientY: 100, pointerId: 1 });
+    fireEvent.pointerMove(row, { clientX: 188, clientY: 100, pointerId: 1 });
+    fireEvent.pointerUp(row, { clientX: 188, clientY: 100, pointerId: 1 });
     expect(screen.queryByText('刪除')).not.toBeInTheDocument();
   });
 });

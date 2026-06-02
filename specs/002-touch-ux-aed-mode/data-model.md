@@ -13,16 +13,16 @@ new persisted datum is a single UI preference held outside the case record.
   - `kind: 'rhythm'`
   - `label: '心律分析：可電擊 AED建議電擊'` (or `…不可電擊 AED不建議電擊`)
   - `rhythm: '可電擊 AED建議電擊' | '不可電擊 AED不建議電擊'`
-  No new fields. `initialRhythm` / `lastRhythm` derive from `rhythm` exactly as today.
+    No new fields. `initialRhythm` / `lastRhythm` derive from `rhythm` exactly as today.
 
 ## New constant table
 
 **`AED_OUTCOMES`** (`src/domain/constants.ts`) — parallel to the existing `RHYTHMS`:
 
-| key | label | shockable |
-|---------|------------------------------|-----------|
-| shock | `可電擊 AED建議電擊` | `true` |
-| noshock | `不可電擊 AED不建議電擊` | `false` |
+| key     | label                    | shockable |
+| ------- | ------------------------ | --------- |
+| shock   | `可電擊 AED建議電擊`     | `true`    |
+| noshock | `不可電擊 AED不建議電擊` | `false`   |
 
 ```ts
 export interface AedOutcome {
@@ -37,6 +37,7 @@ export const AED_OUTCOMES: AedOutcome[] = [
 ```
 
 **Validation / invariants**:
+
 - The `label` first token (`label.split(' ')[0]`) is `可電擊` / `不可電擊`, matching the
   existing summary "心律" cell logic — no derivation change.
 - **Clinical guardrail (FR-016)**: a coarse outcome MUST NOT equal or map to any
@@ -47,8 +48,8 @@ export const AED_OUTCOMES: AedOutcome[] = [
 **RhythmMode preference** — a standalone, un-versioned UI preference, deliberately
 separate from `CaseState` so a new case / case clear never resets it (FR-015).
 
-| Attribute | Type | Values | Default | Storage |
-|-----------|------|--------|---------|---------|
+| Attribute  | Type | Values                        | Default       | Storage                                                                                |
+| ---------- | ---- | ----------------------------- | ------------- | -------------------------------------------------------------------------------------- |
 | rhythmMode | enum | `'進階 ACLS'` \| `'簡易 AED'` | `'進階 ACLS'` | `localStorage` key `ohca.rhythmMode` (dot style, matching the existing `ohca.case.v1`) |
 
 ```ts
@@ -56,6 +57,7 @@ export type RhythmMode = '進階 ACLS' | '簡易 AED';
 ```
 
 **Lifecycle / rules**:
+
 - Read on mount; if absent or unrecognized → default `'進階 ACLS'`.
 - Written whenever the operator flips the toggle (last-used wins).
 - Independent of `schemaVersion`; corrupt/unknown values fall back to the default rather
@@ -83,7 +85,7 @@ new swipe behaves identically to deleting any rhythm event and recomputes
 
 ## Storage layout summary
 
-| Store | Key | Contents | Versioned | Cleared by newCase() |
-|-------|-----|----------|-----------|----------------------|
-| caseStore (existing) | `ohca.case.v1` (existing key) | `CaseState` incl. AED-outcome rhythm events | Yes (`schemaVersion`) | Yes |
-| prefStore (new) | `ohca.rhythmMode` | `RhythmMode` string | No | No |
+| Store                | Key                           | Contents                                    | Versioned             | Cleared by newCase() |
+| -------------------- | ----------------------------- | ------------------------------------------- | --------------------- | -------------------- |
+| caseStore (existing) | `ohca.case.v1` (existing key) | `CaseState` incl. AED-outcome rhythm events | Yes (`schemaVersion`) | Yes                  |
+| prefStore (new)      | `ohca.rhythmMode`             | `RhythmMode` string                         | No                    | No                   |

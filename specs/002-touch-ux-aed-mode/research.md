@@ -26,6 +26,7 @@ the existing long-press code, so jsdom + `@testing-library/user-event` can drive
 tests.
 
 **Alternatives considered**:
+
 - _Libraries_ (`react-swipeable`, `framer-motion`, `react-swipeable-list`): rejected —
   adds a runtime dependency and bundle weight against the ≤150 KB budget for ~80 lines
   of gesture code we can own and test directly.
@@ -57,6 +58,7 @@ screen density (constitution III accessibility). A token keeps it consistent and
 the touch-target test assert one value.
 
 **Alternatives considered**:
+
 - _Per-component ad-hoc sizes_: rejected — drifts and is hard to test.
 - _64 px floor_: rejected for now — crowds the 2-column tile grid on small phones; 56 px
   was the clarified decision.
@@ -84,6 +86,7 @@ viewport-independent, re-parenting components on rotation cannot lose case state
 (FR-011) — React preserves the hook state in `App`.
 
 **Alternatives considered**:
+
 - _CSS-only (media queries, no JS flag)_: viable for pure styling but the timeline needs
   to move from below the fold into a persistent side zone (DOM reparenting), which is
   cleaner with a JS flag; we still use CSS for sizing.
@@ -122,6 +125,7 @@ separate from the versioned case state so `newCase()` / case clear never resets 
 (FR-015).
 
 **Alternatives considered**:
+
 - _New `aed` event kind_: rejected — would force changes to `EVENT_META`, `derive.ts`,
   and the timeline, and fragment the rhythm history for no clinical benefit.
 - _Store mode inside `CaseState`_: rejected — a per-case mode would forget the
@@ -151,13 +155,13 @@ the behaviours are unit/component-testable and 001 established no E2E harness.
 
 ## Summary of decisions
 
-| # | Area | Decision | New dependency? |
-|---|------|----------|-----------------|
-| R1 | Delete gesture | Own pointer-event swipe-to-reveal in `TimelineRow`; remove long-press | No |
-| R2 | Touch floor | Token `--ohca-touch-min:56px` / `--ohca-touch-gap:8px`, audit all controls | No |
-| R3 | Responsive | `useViewport` matchMedia flag → two-zone grid when wide; CSS sizing | No |
-| R4 | AED mode | `AED_OUTCOMES` + `Seg` toggle in rhythm sheet, reuse `rhythm` event, `prefStore` | No |
-| R5 | Test utils | user-event pointer APIs + `matchMedia` mock in setup | No |
+| #   | Area           | Decision                                                                         | New dependency? |
+| --- | -------------- | -------------------------------------------------------------------------------- | --------------- |
+| R1  | Delete gesture | Own pointer-event swipe-to-reveal in `TimelineRow`; remove long-press            | No              |
+| R2  | Touch floor    | Token `--ohca-touch-min:56px` / `--ohca-touch-gap:8px`, audit all controls       | No              |
+| R3  | Responsive     | `useViewport` matchMedia flag → two-zone grid when wide; CSS sizing              | No              |
+| R4  | AED mode       | `AED_OUTCOMES` + `Seg` toggle in rhythm sheet, reuse `rhythm` event, `prefStore` | No              |
+| R5  | Test utils     | user-event pointer APIs + `matchMedia` mock in setup                             | No              |
 
 No `NEEDS CLARIFICATION` items remain; all spec clarifications (touch floor, long-press
 removal, responsive strategy, AED interpretation) are resolved and reflected above.

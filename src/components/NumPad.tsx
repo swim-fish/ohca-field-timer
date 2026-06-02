@@ -1,4 +1,5 @@
 import type { Theme } from '../theme/tokens';
+import { TOUCH_MIN } from '../theme/touch';
 
 interface NumPadProps {
   value: string;
@@ -55,7 +56,7 @@ export function NumPad({ value, onChange, onDone, t, allowDot, suffix }: NumPadP
             disabled={k === ''}
             aria-label={k === '⌫' ? '刪除' : k || undefined}
             style={{
-              height: 56,
+              height: TOUCH_MIN,
               borderRadius: 14,
               border: `1px solid ${t.line}`,
               background: k === '⌫' ? t.surface2 : t.field,
@@ -76,7 +77,7 @@ export function NumPad({ value, onChange, onDone, t, allowDot, suffix }: NumPadP
         onClick={onDone}
         style={{
           width: '100%',
-          height: 52,
+          minHeight: TOUCH_MIN,
           marginTop: 10,
           borderRadius: 14,
           border: 'none',

@@ -31,9 +31,16 @@ timeline — all running entirely on the device with no network required.
 - **Clinical capture** — analyzed rhythm (VF / pVT / PEA / Asystole / ROSC) with
   shockable rhythms flagged, airway device + ETT size, IV/IO access, and vital
   signs entered on a gloved-hand numeric keypad with auto-derived MAP.
+- **Simplified AED mode** — the rhythm sheet toggles between 進階 ACLS (the
+  five-rhythm picker) and 簡易 AED, which records only a coarse 可電擊 / 不可電擊
+  decision with a one-tap 已電擊 shortcut for responders who cannot classify a
+  specific rhythm; the chosen mode is remembered across reloads.
 - **Live treatment timeline** — reverse-chronological log with time-of-day and
-  elapsed offset per entry; long-press to delete a mis-tap and every summary
-  counter stays consistent (single source of truth).
+  elapsed offset per entry; **swipe an entry to reveal a delete button** to fix a
+  mis-tap, and every summary counter stays consistent (single source of truth).
+- **Glove-friendly & landscape-ready** — every control meets a ≥56 px touch floor
+  with bounce-guarded taps, and the layout adapts from phone portrait (single
+  column) to a multi-zone landscape/tablet layout with a persistent timeline.
 - **Milestones & reset** — declare ROSC and hospital arrival (the master clock
   keeps running); start a new case with explicit confirmation.
 - **Offline & installable** — works fully offline after first load, installs to
@@ -82,8 +89,9 @@ src/
   App.tsx              # Top-level app shell and layout
   components/          # Tactical HUD UI (tiles, timeline, pickers, keypad, …)
   domain/              # Pure logic: types, constants, derivation, formatting, useOHCA hook
-  persistence/         # localStorage case store
-  theme/               # Design tokens and day/night theme
+  hooks/               # useViewport (adaptive layout), useRhythmMode, useTapGuard
+  persistence/         # localStorage case store + UI preference store
+  theme/               # Design tokens, day/night theme, touch-floor constants
   styles/              # Global styles
 tests/                 # Vitest unit + component tests
 specs/                 # Feature spec, plan, and design reference (source of truth)

@@ -27,14 +27,14 @@ Write each test first and watch it fail (Red) before implementing (Green), then 
 
 ### New test files for this feature
 
-| File | Covers | Contract |
-|------|--------|----------|
-| `tests/component/timelineSwipeDelete.test.tsx` | swipe reveal / partial snap-back / tap-delete / one-open / direction lock / no long-press | interaction §1 |
-| `tests/component/touchTargets.test.tsx` | every primary control ≥56×56, ≥8 px gap | interaction §2 |
-| `tests/component/rhythmAedMode.test.tsx` | toggle, AED buttons, 已電擊 shortcut accept/decline, remembered mode | interaction §3 |
-| `tests/component/responsiveLayout.test.tsx` | portrait single-col vs wide two-zone; state survives rotation | responsive RL-1..RL-4 |
-| `tests/unit/prefStore.test.ts` | rhythm-mode read/write/default/corrupt-fallback | interaction PR-1..PR-5 |
-| `tests/unit/aedOutcomes.test.ts` | coarse labels, shockable flags, never a specific rhythm | data-model guardrail |
+| File                                           | Covers                                                                                    | Contract               |
+| ---------------------------------------------- | ----------------------------------------------------------------------------------------- | ---------------------- |
+| `tests/component/timelineSwipeDelete.test.tsx` | swipe reveal / partial snap-back / tap-delete / one-open / direction lock / no long-press | interaction §1         |
+| `tests/component/touchTargets.test.tsx`        | every primary control ≥56×56, ≥8 px gap                                                   | interaction §2         |
+| `tests/component/rhythmAedMode.test.tsx`       | toggle, AED buttons, 已電擊 shortcut accept/decline, remembered mode                      | interaction §3         |
+| `tests/component/responsiveLayout.test.tsx`    | portrait single-col vs wide two-zone; state survives rotation                             | responsive RL-1..RL-4  |
+| `tests/unit/prefStore.test.ts`                 | rhythm-mode read/write/default/corrupt-fallback                                           | interaction PR-1..PR-5 |
+| `tests/unit/aedOutcomes.test.ts`               | coarse labels, shockable flags, never a specific rhythm                                   | data-model guardrail   |
 
 `tests/setup.ts` gains a `matchMedia` mock (and, if needed, `setPointerCapture` no-ops).
 

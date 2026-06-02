@@ -16,7 +16,12 @@ Principle III). Source of truth for the original mock: `specs/001-tactical-hud-t
    心律分析, 氣道處置.
 5. **Vitals HUD** — 3-column cells + MAP pill + ECG note + commit button.
 6. **Stats strip** — 電擊 / Epi / Amio / 心律 mini-stats (derived).
-7. **Timeline** — reverse-chronological treatment log; long-press a row to delete.
+7. **Timeline** — reverse-chronological treatment log; swipe a row sideways to reveal
+   a delete button (feature 002).
+
+On landscape / wide viewports the single column reflows into a two-zone layout: timers
+and action tiles on the left, a persistently visible timeline on the right (feature 002,
+FR-009). Phone portrait keeps the single scroll column unchanged.
 
 ## Color tokens (semantic, FR-018)
 
@@ -45,13 +50,36 @@ for both `dark` (default) and `light`. The accent drives primary buttons and pro
 ## Interaction & accessibility rules
 
 - All visible copy is Traditional Chinese (zh-Hant) — FR-021.
-- Touch targets ≥ 44 px; numeric keypad keys ≥ 56 px (gloved hands).
+- Touch targets ≥ 56 px with ≥ 8 px spacing — the glove-friendly floor (feature 002,
+  FR-006). The single source of truth is `TOUCH_MIN` / `TOUCH_GAP` in `src/theme/touch.ts`,
+  mirrored for CSS as `--ohca-touch-min` / `--ohca-touch-gap` in `global.css`.
 - Drug countdowns are **reminders, never locks** — logging is always allowed.
 - A drug tile **pulses** ("可給藥") once its interval elapses.
-- Long-press (~550 ms) arms a delete; an early release does nothing.
+- Action-logging controls (drug/defib tiles, the defibrillation energy picker, and the
+  AED 已電擊 shortcut) are bounce-guarded so a single gloved contact is not
+  double-counted (feature 002, FR-008); deliberately spaced repeated taps still each
+  register. ROSC / arrival are idempotent (guarded by their own once-only checks).
+- Timeline entries are deleted by a **horizontal swipe** revealing a delete button; a
+  partial swipe snaps back and only one row is armed at a time (feature 002, replaces
+  the former ~550 ms long-press).
 - ROSC / arrival change status only — the elapsed clock keeps running.
 - `aria-label`s on the status dot, theme toggle, keypad keys, start-time control,
   the MAP readout, and the summary group.
+
+## Rhythm analysis: 進階 ACLS ⇄ 簡易 AED (feature 002)
+
+The 心律分析 sheet opens with a glove-sized segmented toggle:
+
+- **進階 ACLS** (default) — the five-rhythm picker (VF / pVT / PEA / Asystole / ROSC)
+  with the 可電擊 badge on shockable rhythms.
+- **簡易 AED** — two large choices, 建議電擊（可電擊節律）and 不建議電擊（不可電擊節律）,
+  for rescuers who cannot classify a specific ACLS rhythm. Choosing 建議電擊 records the
+  coarse outcome and offers a one-tap 已電擊 confirm that logs a shock (略過 keeps the
+  rhythm without a shock).
+
+The chosen mode is remembered across reloads (`ohca.rhythmMode`, separate from the case).
+**Clinical guardrail**: the AED outcome stores only 可電擊 / 不可電擊 and is never
+back-mapped to a specific rhythm (FR-016).
 
 ## Changing the UI
 

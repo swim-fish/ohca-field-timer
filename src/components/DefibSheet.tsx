@@ -1,19 +1,22 @@
 import type { Theme } from '../theme/tokens';
 import { DEFIB_JOULES } from '../domain/constants';
+import { useTapGuard } from '../hooks/useTapGuard';
 
 interface DefibSheetProps {
   t: Theme;
   onPick: (joules: number) => void;
 }
 
-// Defibrillation energy picker (FR-005).
+// Defibrillation energy picker (FR-005). Buttons are bounce-guarded so a single gloved
+// contact does not log two shocks (FR-008).
 export function DefibSheet({ t, onPick }: DefibSheetProps) {
+  const guard = useTapGuard();
   return (
     <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: 8 }}>
       {DEFIB_JOULES.map((j) => (
         <button
           key={j}
-          onClick={() => onPick(j)}
+          onClick={guard(() => onPick(j))}
           style={{
             height: 60,
             borderRadius: 14,
@@ -31,7 +34,7 @@ export function DefibSheet({ t, onPick }: DefibSheetProps) {
         </button>
       ))}
       <button
-        onClick={() => onPick(200)}
+        onClick={guard(() => onPick(200))}
         style={{
           height: 60,
           borderRadius: 14,
