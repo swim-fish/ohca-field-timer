@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>OHCA 現場計時與紀錄器 · 重新設計</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;500;700;800;900&family=JetBrains+Mono:wght@500;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root{
+    --ohca-sans:'Noto Sans TC',-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+    --ohca-mono:'JetBrains Mono','SFMono-Regular',ui-monospace,Menlo,Consolas,monospace;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0;height:100%}
+  body{font-family:var(--ohca-sans);background:#f0eee9}
+  input,button,select,textarea{font-family:inherit}
+  /* phone frame inside artboards */
+  .ohca-phone{width:100%;height:100%;border-radius:30px;overflow:hidden;position:relative}
+</style>
+</head>
+<body>
+<div id="root"></div>
+
+<script src="https://unpkg.com/react@18.3.1/umd/react.development.js" integrity="sha384-hD6/rw4ppMLGNu3tX5cjIb+uRZ7UkRJ6BPkLpg4hAu/6onKUg4lLsHAs9EBPT82L" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/react-dom@18.3.1/umd/react-dom.development.js" integrity="sha384-u6aeetuaXnQ38mYT8rp6sbXaQe3NL9t+IBXmnYxwkUI2Hw4bsp2Wvmx4yRQF1uAm" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/@babel/standalone@7.29.0/babel.min.js" integrity="sha384-m08KidiNqLdpJqLq95G/LEi8Qvjl/xUYll3QILypMoQ65QorJ9Lvtp2RXYGBFj1y" crossorigin="anonymous"></script>
+
+<script type="text/babel" src="design-canvas.jsx"></script>
+<script type="text/babel" src="ohca-core.jsx"></script>
+<script type="text/babel" src="variant-tactical.jsx"></script>
+<script type="text/babel" src="variant-clinical.jsx"></script>
+<script type="text/babel" src="variant-timeline.jsx"></script>
+
+<script type="text/babel">
+  const PHONE_W = 393, PHONE_H = 852;
+
+  // shared demo seed: ~7 min into a resuscitation with a few logged events
+  function makeSeed() {
+    const t0 = Date.now() - 7 * 60 * 1000; // case start
+    const ev = (kind, sec, label, detail, extra) => ({
+      id: 'seed' + kind + sec, kind, at: t0 + sec * 1000, label, detail, ...(extra || {}),
+    });
+    return {
+      seedElapsed: 7 * 60 + 12,
+      seedEvents: () => ([
+        ev('rhythm', 30, '心律分析：VF 心室顫動'),
+        ev('defib', 55, '電擊 200J（第 1 次）'),
+        ev('iv', 80, 'IO/IV 通路建立'),
+        ev('epi', 95, 'Epinephrine 第 1 劑'),
+        ev('airway', 140, '氣道：聲門上 i-gel'),
+        ev('vitals', 175, '生命徵象', 'EtCO₂ 18  ·  SpO₂ 88%', { vitals: { etco2: '18', spo2: '88' } }),
+        ev('defib', 200, '電擊 200J（第 2 次）'),
+        ev('rhythm', 215, '心律分析：pVT 無脈性室速'),
+        ev('epi', 280, 'Epinephrine 第 2 劑'),
+      ].sort((a, b) => b.at - a.at)),
+    };
+  }
+
+  function PhoneStub({ label }) {
+    return (
+      <div style={{ height: '100%', display: 'flex', flexDirection: 'column', alignItems: 'center',
+        justifyContent: 'center', gap: 12, background: '#0E141B', color: '#5C6B7C',
+        fontFamily: 'var(--ohca-sans)' }}>
+        <div style={{ fontSize: 30 }}>🫀</div>
+        <div style={{ fontSize: 15, fontWeight: 700 }}>{label}</div>
+        <div style={{ fontSize: 12 }}>建構中…</div>
+      </div>
+    );
+  }
+
+  function App() {
+    const seedA = React.useMemo(makeSeed, []);
+    const seedB = React.useMemo(makeSeed, []);
+    const seedC = React.useMemo(makeSeed, []);
+    return (
+      <DesignCanvas>
+        <DCSection id="dirs" title="OHCA 現場計時與紀錄器 · 重新設計"
+          subtitle="三種方向並排比較 — 計時器倒數、ROSC、新增紀錄皆可操作。每個方向右上可切換日夜模式。">
+          <DCArtboard id="A" label="A · 戰術儀表板 Tactical HUD" width={PHONE_W} height={PHONE_H}
+            style={{ borderRadius: 30, background: '#0B0F14' }}>
+            <div className="ohca-phone"><OHCATactical {...seedA} /></div>
+          </DCArtboard>
+          <DCArtboard id="B" label="B · 臨床卡片 Clinical" width={PHONE_W} height={PHONE_H}
+            style={{ borderRadius: 30, background: '#EEF1F4' }}>
+            <div className="ohca-phone">
+              {window.OHCAClinical ? <OHCAClinical {...seedB} /> : <PhoneStub label="B · 臨床卡片" />}
+            </div>
+          </DCArtboard>
+          <DCArtboard id="C" label="C · 時序優先 Timeline-first" width={PHONE_W} height={PHONE_H}
+            style={{ borderRadius: 30, background: '#0B0F14' }}>
+            <div className="ohca-phone">
+              {window.OHCATimeline ? <OHCATimeline {...seedC} /> : <PhoneStub label="C · 時序優先" />}
+            </div>
+          </DCArtboard>
+        </DCSection>
+      </DesignCanvas>
+    );
+  }
+
+  ReactDOM.createRoot(document.getElementById('root')).render(<App />);
+</script>
+</body>
+</html>
