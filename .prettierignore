@@ -1,0 +1,8 @@
+node_modules/
+dist/
+build/
+coverage/
+dev-dist/
+package-lock.json
+specs/001-tactical-hud-timer/design-reference/
+.specify/
